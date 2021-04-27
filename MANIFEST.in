@@ -1,0 +1,4 @@
+include aliens/schema.sql
+graft aliens/static
+graft aliens/templates
+global-exclude *.pyc
