@@ -1,0 +1,27 @@
+.onboard {
+    padding: 3px 10px;
+    color: rgb(71, 2, 2);
+    border: 1px solid  rgb(71, 2, 2);
+    transition: all .2s linear;
+    margin: 5px;
+}
+
+.onboard:hover {
+    background-color: rgb(71, 2, 2);
+    color: white;
+    cursor: pointer;
+}
+
+.to {
+    padding: 10px 1px;
+    border: 1px solid rgb(80, 62, 241);
+    margin: 3px 0;
+    font-weight: bold;
+    transition: all .1s linear;
+    cursor: pointer;
+}
+
+.to:hover {
+    color: white;
+    background-color: rgb(80, 62, 241);
+}
