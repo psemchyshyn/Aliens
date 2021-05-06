@@ -9,6 +9,12 @@ class Alien(db.Model):
     def __init__(self, name):
         self.name = name
 
+    
+    def get_killer_id(self): # return -1 if alien if alive
+        if self.cemetery is not None:
+            return self.cemetery.killer_id
+        else:
+            return -1
 
 class Human(db.Model):
     __tablename__ = "Human"

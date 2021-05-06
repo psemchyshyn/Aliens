@@ -14,3 +14,4 @@ class Cemetery(db.Model):
     def __init__(self, human, alien):
         self.human = human
         self.alien = alien
+    

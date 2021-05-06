@@ -1,3 +1,8 @@
 /aliens/__pycache__
 /instance
 /venv
+/__pycache__
+/aliens/models/__pycache__/
+/aliens/frontend/node_modules
+/aliens/frontend/public
+aliens/rest/__pycache__/
