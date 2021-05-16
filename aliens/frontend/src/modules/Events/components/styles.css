@@ -1,0 +1,17 @@
+.interested {
+    padding: 3px 10px;
+    color: rgb(71, 2, 2);
+    border: 1px solid  rgb(71, 2, 2);
+    transition: all .2s linear;
+    margin: 5px;
+}
+
+.interested:hover {
+    background-color: rgb(71, 2, 2);
+    color: white;
+    cursor: pointer;
+}
+
+.event-scheduled {
+    font-weight: bold;
+}
