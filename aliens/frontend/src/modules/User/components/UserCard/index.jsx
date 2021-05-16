@@ -1,5 +1,6 @@
 import {Card, ListGroupItem, Row, Col, Container, Accordion, Badge} from "react-bootstrap";
 import SpaceshipsCard from "../SpaceshipsCard/index";
+import PropTypes from 'prop-types';
 
 const UserCard = () => {
     const badge = {
@@ -34,11 +35,11 @@ const UserCard = () => {
                         <Accordion defaultActiveKey="0">
                                 <Accordion.Toggle as={Card.Title} eventKey="0">
                                     <Card.Body>
-                                        sd
+                                        Escapes
                                     </Card.Body>
                                 </Accordion.Toggle>
                                 <Accordion.Collapse eventKey="0">
-                                    <div>sdf</div>
+                                    <div>User escapes</div>
                                 </Accordion.Collapse>
                         </Accordion>
                         <SpaceshipsCard></SpaceshipsCard>

@@ -6,6 +6,7 @@ import ExcursionsView from "./views/ExcursionsView/index";
 import ExperimentsView from "./views/ExperimentsView/index";
 import EnemiesView from "./views/EnemiesView/index";
 import SpaceshipsView from "./views/SpaceshipsView/index";
+import {setState} from "react";
 
 import {
   BrowserRouter as Router,
@@ -14,6 +15,7 @@ import {
 } from "react-router-dom";
 
 function App() {
+  const [user, setUser] = setState(null);
   return (
     <Router>
       <Switch>
