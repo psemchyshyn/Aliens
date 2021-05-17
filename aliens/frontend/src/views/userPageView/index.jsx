@@ -1,12 +1,23 @@
 import UserCard from "../../modules/User/components/UserCard/index";
-import Header from "../../modules/Basic/components/Header/index"
+import {
+    Switch,
+    Route,
+    useRouteMatch,
+  } from "react-router-dom";
 
 
 const UserPageView = () => {
+    let match = useRouteMatch();
     return (
         <>
-            <Header></Header>
-            <UserCard></UserCard>
+            <Switch>
+                <Route path={`${match.path}/:userId`}>
+                    <UserCard></UserCard>
+                </Route>
+                <Route path={match.path}>
+                    <h3>Please select a user.</h3>
+                </Route>
+            </Switch>
         </>
     )
 }

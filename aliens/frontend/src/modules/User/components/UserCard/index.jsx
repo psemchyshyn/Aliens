@@ -1,8 +1,22 @@
-import {Card, ListGroupItem, Row, Col, Container, Accordion, Badge} from "react-bootstrap";
+import {Card, Row, Col, Container, Accordion, Badge} from "react-bootstrap";
 import SpaceshipsCard from "../SpaceshipsCard/index";
 import PropTypes from 'prop-types';
+import {useEffect, useState} from "react"
+import {useParams} from "react-router-dom"
+import {getHuman} from "../../../../services/human"
+
 
 const UserCard = () => {
+    let {userId} = useParams()
+    let [user, setUser] = useState({spaceships: []});
+
+    useEffect(() => {
+        getHuman(userId).then(user => {
+            console.log(user)
+            setUser(user)    
+        })
+    }, [])
+
     const badge = {
         position: "absolute",
         top: "20px",
@@ -24,7 +38,7 @@ const UserCard = () => {
                         <Card.Title className="border-bottom">
                             <Row className="py-2 align-items-center">
                                 <Col xs={9}>
-                                    <div id="user-name">Name</div>
+                                    <div id="user-name">{user.name}</div>
                                 </Col>
                                 <Col xs={3} >
                                     <span id="user-rating">20</span>
@@ -42,7 +56,7 @@ const UserCard = () => {
                                     <div>User escapes</div>
                                 </Accordion.Collapse>
                         </Accordion>
-                        <SpaceshipsCard></SpaceshipsCard>
+                        <SpaceshipsCard spaceshipIds={user.spaceships.map(ship => ship.id)}></SpaceshipsCard>
                     </Col>
                 </Row>
             </Card>

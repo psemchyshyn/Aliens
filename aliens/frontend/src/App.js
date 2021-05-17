@@ -6,7 +6,9 @@ import ExcursionsView from "./views/ExcursionsView/index";
 import ExperimentsView from "./views/ExperimentsView/index";
 import EnemiesView from "./views/EnemiesView/index";
 import SpaceshipsView from "./views/SpaceshipsView/index";
-import {setState} from "react";
+import Header from "./modules/Basic/components/Header/index";
+import {getHuman} from "./services/human"
+import {useState, useEffect} from "react";
 
 import {
   BrowserRouter as Router,
@@ -15,15 +17,18 @@ import {
 } from "react-router-dom";
 
 function App() {
-  const [user, setUser] = setState(null);
+  const [userId, setUserId] = useState(1); // later chagen to login/ logout
+
   return (
+    <>
+    <Header></Header>
     <Router>
       <Switch>
         <Route path="/register">
           <RegisterView>
           </RegisterView>
         </Route>
-        <Route path="/home">
+        <Route path="/users">
           <UserPageView></UserPageView>
         </Route>
         <Route path="/experiments">
@@ -40,6 +45,7 @@ function App() {
         </Route>
       </Switch>
     </Router>
+    </>
   );
 }
 

@@ -1,11 +1,9 @@
-import Header from "../../modules/Basic/components/Header/index";
-import Enemies from "../../modules/Enemies/components/index";
+import Enemies from "../../modules/Enemies/components/EnemyTable/index";
 
 
 const EnemiesView = () => {
     return (
         <>
-            <Header></Header>
             <Enemies></Enemies>
         </>
     )

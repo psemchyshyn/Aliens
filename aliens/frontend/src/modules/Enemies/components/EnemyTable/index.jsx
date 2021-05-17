@@ -1,4 +1,4 @@
-import FilterEnemies from "./filter"
+import FilterEnemies from "../FilterEnemy/filter"
 import {Table, Container, Row, Col, Button} from "react-bootstrap"
 
 const Enemies = () => {

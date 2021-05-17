@@ -1,4 +1,4 @@
-import Spaceship from "./spaceship"
+import Spaceship from "../ship/spaceship"
 import {Container, Row, Col} from "react-bootstrap"
 
 const SpaceShips = () => {

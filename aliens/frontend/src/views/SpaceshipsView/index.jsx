@@ -1,11 +1,9 @@
-import Header from "../../modules/Basic/components/Header/index"
-import SpaceShips from "../../modules/Spaceships/components/index"
+import SpaceShips from "../../modules/Spaceships/components/Spaceships/index"
 
 
 const SpaceshipsView = () => {
     return (
         <>
-        <Header></Header> 
         <SpaceShips></SpaceShips>
         </>
     )
