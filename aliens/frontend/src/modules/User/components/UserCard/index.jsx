@@ -8,7 +8,7 @@ import {getHuman} from "../../../../services/human"
 
 const UserCard = () => {
     let {userId} = useParams()
-    let [user, setUser] = useState({spaceships: []});
+    let [user, setUser] = useState({abductions: []});
 
     useEffect(() => {
         getHuman(userId).then(user => {
@@ -56,7 +56,7 @@ const UserCard = () => {
                                     <div>User escapes</div>
                                 </Accordion.Collapse>
                         </Accordion>
-                        <SpaceshipsCard spaceshipIds={user.spaceships.map(ship => ship.id)}></SpaceshipsCard>
+                        <SpaceshipsCard spaceshipIds={user.abductions.map(ship => ship.id)}></SpaceshipsCard>
                     </Col>
                 </Row>
             </Card>
