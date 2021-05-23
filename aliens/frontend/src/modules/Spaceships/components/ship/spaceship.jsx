@@ -1,7 +1,7 @@
 import {Card, Col, Row, Button, OverlayTrigger, Popover} from "react-bootstrap"
 import "./styles.css"
 
-const Spaceship = () => {
+const Spaceship = ({ships, current_ship, }) => {
     const popover1 = (
         <Popover id="popover-basic">
           <Popover.Title as="h3">Commute to</Popover.Title>

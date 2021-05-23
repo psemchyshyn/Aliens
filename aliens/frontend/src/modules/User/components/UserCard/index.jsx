@@ -1,21 +1,61 @@
 import {Card, Row, Col, Container, Accordion, Badge} from "react-bootstrap";
 import SpaceshipsCard from "../SpaceshipsCard/index";
-import PropTypes from 'prop-types';
 import {useEffect, useState} from "react"
-import {useParams} from "react-router-dom"
+import {useParams, useLocation} from "react-router-dom"
 import {getHuman} from "../../../../services/human"
+import {getAlien} from "../../../../services/alien"
 
+import "./styles.css"
+
+function useQuery() {
+    return new URLSearchParams(useLocation().search);
+  }
+  
 
 const UserCard = () => {
     let {userId} = useParams()
+    let type = useQuery().get("type");
     let [user, setUser] = useState({abductions: []});
 
     useEffect(() => {
-        getHuman(userId).then(user => {
-            console.log(user)
-            setUser(user)    
-        })
+        console.log("The type is", type)
+        if (type === "'alien'") {
+            getAlien(userId).then(user => {
+                setUser({...user, isAlien: true})    
+            })
+        } else {
+            getHuman(userId).then(user => {
+                setUser({...user, isAlien: false})    
+            })
+        }
     }, [])
+
+    const userType = () => {
+        // to differentiate human and alien, change some ui stuff
+        if (user.isAlien) {
+            return {"color": "success", "race": "Alien", 'kill&abd': "Total abductions",
+            'esc&comm': "Total commutations", 'ex': "Total experiments"}
+        } else {
+            return {"color": "danger", "race": "Human", 'kill&abd': "Total kills",
+            'esc&comm': "Total escapes", 'ex': "Total excursions"}
+        }
+    }
+
+    const getEscOrComm = () => {
+        let result = user.isAlien ? user.commutations : user.escapes
+        return result ? result : []
+    }
+
+    const getKillsOrAbd = () => {
+        let result = user.isAlien ? user.abductions: user.killed
+        return result ? result : []
+    }
+
+    const getEx = () => {
+        let result = user.isAlien ? user.experiments : user.excursions
+        return result ? result : []
+
+    }
 
     const badge = {
         position: "absolute",
@@ -26,11 +66,11 @@ const UserCard = () => {
     }
     return (
         <Container className="my-4">
-            <Card border="danger" className="mx-auto" style={{width: "80%"}}>
+            <Card border={userType()["color"]} className="mx-auto" style={{width: "80%"}}>
                 <Row className="no-gutters position-relative">
                     <Col sm={12} md={6}>
                         <div style={badge}>
-                            <Badge variant="danger">Human</Badge>
+                            <Badge variant={userType()["color"]}>{userType()["race"]}</Badge>
                         </div>
                         <Card.Img src="https://nogivruki.ua/wp-content/uploads/2018/08/default-user-image.png" alt="imageplaceholder"/>
                     </Col>
@@ -48,15 +88,55 @@ const UserCard = () => {
                         </Card.Title>
                         <Accordion defaultActiveKey="0">
                                 <Accordion.Toggle as={Card.Title} eventKey="0">
-                                    <Card.Body>
-                                        Escapes
-                                    </Card.Body>
+                                    <div className="stats">
+                                        <div><i class="fas fa-caret-right"></i></div>
+                                        <div>{userType()['esc&comm']}: </div>
+                                        <div>{getEscOrComm().length}</div>   
+                                    </div>
                                 </Accordion.Toggle>
                                 <Accordion.Collapse eventKey="0">
-                                    <div>User escapes</div>
+                                    <div className="d-flex">
+                                        {
+                                            getEscOrComm().map(el => (
+                                                <div className="stats-element">{el.id}</div>
+                                            ))
+                                        }
+                                    </div>
+                                </Accordion.Collapse>
+                                <Accordion.Toggle as={Card.Title} eventKey="1">
+                                    <div className="stats">
+                                        <div><i class="fas fa-caret-right"></i></div>
+                                        <div>{userType()['kill&abd']}:</div>
+                                        <div>{getKillsOrAbd().length}</div>   
+                                    </div>
+                                </Accordion.Toggle>
+                                <Accordion.Collapse eventKey="1">
+                                    <div className="d-flex">
+                                        {
+                                            getKillsOrAbd().map(el => (
+                                                <div className="stats-element">{el.id}</div>
+                                            ))
+                                        }
+                                    </div>
+                                </Accordion.Collapse>
+                                <Accordion.Toggle as={Card.Title} eventKey="2">
+                                    <div className="stats">
+                                        <div><i class="fas fa-caret-right"></i></div>
+                                        <div>{userType()['ex']}:</div>
+                                        <div>{getEx().length}</div>   
+                                    </div>
+                                </Accordion.Toggle>
+                                <Accordion.Collapse eventKey="2">
+                                    <div className="d-flex">
+                                            {
+                                                getEx().map(el => (
+                                                    <div className="stats-element">{el.id}</div>
+                                                ))
+                                            }
+                                    </div>
                                 </Accordion.Collapse>
                         </Accordion>
-                        <SpaceshipsCard spaceshipIds={user.abductions.map(ship => ship.id)}></SpaceshipsCard>
+                        <SpaceshipsCard user={user}></SpaceshipsCard>
                     </Col>
                 </Row>
             </Card>

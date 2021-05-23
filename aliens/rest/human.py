@@ -6,6 +6,7 @@ from flask import jsonify
 
 
 resource_fields = {
+    'id': fields.Integer,
     'name':   fields.String,
     'experiments': fields.List(fields.Nested({"id": fields.Integer})),
     'abductions': fields.List(fields.Nested({"id": fields.Integer})),

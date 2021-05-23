@@ -7,7 +7,8 @@ import ExperimentsView from "./views/ExperimentsView/index";
 import EnemiesView from "./views/EnemiesView/index";
 import SpaceshipsView from "./views/SpaceshipsView/index";
 import Header from "./modules/Basic/components/Header/index";
-import {getHuman} from "./services/human"
+
+import {Provider} from "react-redux"
 import {useState, useEffect} from "react";
 
 import {
@@ -16,9 +17,11 @@ import {
   Route,
 } from "react-router-dom";
 
-function App() {
-  const [userId, setUserId] = useState(1); // later chagen to login/ logout
+// const selectUser = createSelector(
+//   state => state.user,
+// )
 
+function App() {
   return (
     <>
     <Header></Header>

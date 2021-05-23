@@ -1,19 +1,18 @@
 import {Row, Col, Carousel, Card, ListGroup, ListGroupItem} from "react-bootstrap";
 import {useEffect, useState} from "react"
-import {getSpaceship} from "../../../../services/spaceship"
+import {getSpaceships} from "../../../../services/spaceship"
 import SpaceshipCarousel from "./Carousel/index"
 
 
 
-const SpaceshipsCard = ({spaceshipIds}) => {
+const SpaceshipsCard = ({user}) => {
     const [spaceships, setSpaceships] = useState([])
 
     useEffect(() => {
-        Promise.all(spaceshipIds).then(spaceships => {
-            console.log(spaceshipIds)
-            setSpaceships(spaceships)
+        getSpaceships(user.id, user.isAlien).then(spaceships => {
+            setSpaceships(spaceships["spaceships"])
         })
-    }, [])
+    }, [user])
 
     return (
     <div>

@@ -1,11 +1,14 @@
 from aliens.models.objects import Spaceship
+from aliens import db
 from flask_restful import reqparse, abort, Resource, fields, marshal, marshal_with
+from datetime import datetime
 import json
 from flask import jsonify
 
 
 
 resource_fields = {
+    'id': fields.Integer,
     'name':   fields.String,
     'experiments': fields.List(fields.Nested({"id": fields.Integer})),
     '_links': {
@@ -21,7 +24,30 @@ collection_fields = {
 
 
 parser = reqparse.RequestParser()
-parser.add_argument('name')
+parser.add_argument('target_id', type=int)
+parser.add_argument('isAlien', type=bool)
+parser.add_argument('start_date', type=lambda x: datetime.strptime(x, '%Y-%m-%d'), location="args")
+parser.add_argument('end_date', type=lambda x: datetime.strptime(x, '%Y-%m-%d'), location="args")
+
+
+def get_human_ships(h_id, start_date=None, end_date=None):
+    result_ids = db.session.query(Spaceship.id).from_statement(db.text(
+            '''
+            SELECT spaceship.id FROM "Spaceship" as spaceship
+                JOIN "Abduction" as abduction ON (abduction.spaceship_id = spaceship.id)
+                WHERE (abduction.human_id =:id AND abduction.date BETWEEN '1999-03-02' AND '2021-10-12')     -- F,T
+            UNION 
+            SELECT spaceship.id FROM "Spaceship" as spaceship
+                JOIN "Commutation" as commutation ON (commutation.to_id = spaceship.id)
+                WHERE (commutation.human_id =:id AND commutation.date BETWEEN '1999-03-02' AND '2021-10-12')    -- F,T
+            UNION
+            SELECT spaceship.id FROM "Spaceship" as spaceship
+                JOIN "Experiment" as experiment ON (experiment.spaceship_id = spaceship.id)
+                WHERE (experiment.human_id =:id AND experiment.date BETWEEN '1999-03-02' AND '2021-10-12')    -- F,T
+            '''
+        )).params(id=h_id).all()
+    return db.session.query(Spaceship).filter(Spaceship.id.in_(map(lambda x: x[0], result_ids))).all()
+
 
 
 def abort_if_doesnt_exist(id):
@@ -45,5 +71,12 @@ class SpaceshipRest(Resource):
 class SpaceshipsRest(Resource):
     @marshal_with(collection_fields)
     def get(self):
-        result = Spaceship.query.all()
+        args = parser.parse_args()
+        if (args["target_id"]):
+            if (args["isAlien"]):
+                result = get_human_ships(args["target_id"])
+            else: 
+                result = get_human_ships(args["target_id"])
+        else:
+            result = Spaceship.query.all()
         return {"amount": len(result), "spaceships": result}
