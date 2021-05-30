@@ -15,10 +15,11 @@ const SpaceshipCarousel = ({spaceships}) => {
                                         <Card.Title>{spaceship.name}</Card.Title>  
                                     </Card.Body>   
                                     <ListGroup className="list-group-flush">
-                                        <ListGroupItem>Abducted: <span>{spaceship.experiments.length}</span></ListGroupItem>
-                                        <ListGroupItem>Experimented: <span>2</span></ListGroupItem>
-                                        <ListGroupItem>Moved from: <span>2</span></ListGroupItem>
-                                        <ListGroupItem>Moved to: <span>2</span></ListGroupItem>
+                                        <ListGroupItem>Abducted: <span>{spaceship.abductions.length}</span></ListGroupItem>
+                                        <ListGroupItem>Experimented: <span>{spaceship.experiments.length}</span></ListGroupItem>
+                                        <ListGroupItem>Transfers from: <span>{spaceship.transferred.length}</span></ListGroupItem>
+                                        <ListGroupItem>Transfers to: <span>{spaceship.accepted.length}</span></ListGroupItem>
+                                        <ListGroupItem>Escapes: <span>{spaceship.escapes.length}</span></ListGroupItem>
                                     </ListGroup>
                                 </Card>
                                 <div style={{height: '50px'}}></div>

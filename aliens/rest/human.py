@@ -1,4 +1,5 @@
 from aliens.models.objects import Human
+from aliens import db
 from flask_restful import reqparse, abort, Resource, fields, marshal, marshal_with
 import json
 from flask import jsonify
@@ -27,7 +28,10 @@ collection_fields = {
 
 
 parser = reqparse.RequestParser()
-parser.add_argument('name')
+parser.add_argument('kills', type=int, location="args")
+parser.add_argument('escapes', type=int, location="args")
+parser.add_argument('excursions', type=int, location="args")
+
 
 
 def abort_if_doesnt_exist(id):
@@ -51,5 +55,13 @@ class HumanRest(Resource):
 class HumansRest(Resource):
     @marshal_with(collection_fields)
     def get(self):
-        result = Human.query.all()
+        args = parser.parse_args()
+        result = db.session.query(Human).all()
+        if args['kills']:
+            result = filter(lambda x: len(x.killed) >= args["kills"], result)
+        if args['escapes']:
+            result = filter(lambda x: len(x.escapes) >= args["escapes"], result)
+        if args['excursions']:
+            result = filter(lambda x: len(x.excursions) >= args["excursions"], result)        
+        result = list(result)
         return {"amount": len(result), "humans": result}

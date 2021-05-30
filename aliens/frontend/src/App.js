@@ -6,10 +6,9 @@ import ExcursionsView from "./views/ExcursionsView/index";
 import ExperimentsView from "./views/ExperimentsView/index";
 import EnemiesView from "./views/EnemiesView/index";
 import SpaceshipsView from "./views/SpaceshipsView/index";
+import QueriesView from "./views/QueriesView/index"
 import Header from "./modules/Basic/components/Header/index";
 
-import {Provider} from "react-redux"
-import {useState, useEffect} from "react";
 
 import {
   BrowserRouter as Router,
@@ -45,6 +44,9 @@ function App() {
         </Route>
         <Route path="/spaceships">
           <SpaceshipsView></SpaceshipsView>
+        </Route>
+        <Route path="/queries">
+          <QueriesView></QueriesView>
         </Route>
       </Switch>
     </Router>

@@ -29,8 +29,9 @@ def create_app(test_config=None):
 
     db.init_app(app)
     ma.init_app(app)
-    from .rest import api
+    from .rest import api, queries
     api.init_app(app)
+    app.register_blueprint(queries, url_prefix="/api/queries")
     # ensure the instance folder exists
     try:
         os.makedirs(app.instance_path)

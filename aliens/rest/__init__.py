@@ -5,6 +5,7 @@ from aliens.rest.human import HumanRest, HumansRest
 from aliens.rest.excursion import ExcursionRest, ExcursionsRest
 from aliens.rest.abdcution import AbductionRest, AbductionsRest
 from aliens.rest.escape import EscapeRest, EscapesRest
+from aliens.rest.queries import queries
 
 from flask_restful import Api
 

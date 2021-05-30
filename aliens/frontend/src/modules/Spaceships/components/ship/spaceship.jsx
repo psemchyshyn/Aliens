@@ -1,36 +1,52 @@
 import {Card, Col, Row, Button, OverlayTrigger, Popover} from "react-bootstrap"
+import {useEffect, useState} from "react"
+import {getExperiment} from "../../../../services/experiment"
 import "./styles.css"
 
-const Spaceship = ({ships, current_ship, }) => {
-    const popover1 = (
-        <Popover id="popover-basic">
-          <Popover.Title as="h3">Commute to</Popover.Title>
-          <Popover.Content>
-            <div className="to">Ship</div>
-            <div className="to">Ship</div>
-            <div className="to">Ship</div>
-          </Popover.Content>
-        </Popover>
-      );
+const Spaceship = ({name, exps, ships}) => {
+    let [people, setPeople] = useState([])
 
-    const popover2 = popover1
+    useEffect(() => {
+        Promise.all(exps.map(id => getExperiment(id))).then(
+            experiments => {
+                setPeople(experiments.map(ex => ex.human_id))
+                console.log("IN ship", experiments.map(ex => ex.human_id))
+            }
+        )
+    }, [])
+
+    const getPopover = (ships) => {
+        return (
+            <Popover >
+                <Popover.Title as="h3">Commute to</Popover.Title>
+                <Popover.Content>
+                    {
+                    ships.map(ship => (
+                        <div className="to">{ship.name}</div>
+                    ))
+                    }
+                </Popover.Content>
+            </Popover>
+        )
+    }       
+
     return (
         <Card border="primary">
         <Card.Header>
-            Ship name
+            {name}
         </Card.Header>
         <Card.Body>
             <Row>
-            <OverlayTrigger trigger="click" placement="right" overlay={popover1}>
-                <div className="onboard">
-                    Oleg
-                </div>
-            </OverlayTrigger>
-            <OverlayTrigger trigger="click" placement="right" overlay={popover2}>
-                <div className="onboard">
-                    Sanya
-                </div>
-            </OverlayTrigger>
+                {
+                    people.map(human => (
+                        <OverlayTrigger trigger="click" placement="right" overlay={getPopover(ships.filter(ship => ship.name !== name))}>
+                        <div className="onboard">
+                            {human}
+                        </div>
+                        </OverlayTrigger>
+                    ))
+
+                }
             </Row>
             <Row className="border-top align-items-center">
                 <Col>

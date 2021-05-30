@@ -11,6 +11,10 @@ resource_fields = {
     'id': fields.Integer,
     'name':   fields.String,
     'experiments': fields.List(fields.Nested({"id": fields.Integer})),
+    'escapes': fields.List(fields.Nested({"id": fields.Integer})),
+    'abductions': fields.List(fields.Nested({"id": fields.Integer})),
+    'transferred': fields.List(fields.Nested({"id": fields.Integer})),
+    'accepted': fields.List(fields.Nested({"id": fields.Integer})),
     '_links': {
         "self": fields.Url('spaceship'), 
         "collection": fields.Url('spaceships')

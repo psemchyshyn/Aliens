@@ -15,7 +15,7 @@ function useQuery() {
 const UserCard = () => {
     let {userId} = useParams()
     let type = useQuery().get("type");
-    let [user, setUser] = useState({abductions: []});
+    let [user, setUser] = useState({});
 
     useEffect(() => {
         console.log("The type is", type)
@@ -114,7 +114,9 @@ const UserCard = () => {
                                     <div className="d-flex">
                                         {
                                             getKillsOrAbd().map(el => (
-                                                <div className="stats-element">{el.id}</div>
+                                                <div className="stats-element">
+                                                    {el.id}
+                                                </div>
                                             ))
                                         }
                                     </div>

@@ -13,7 +13,7 @@ class Excursion(db.Model):
     date = db.Column(db.DateTime, default=datetime.utcnow)
     alien_id = db.Column(db.Integer, db.ForeignKey("Alien.id"), nullable=False)
     guide = db.relationship("Alien", backref=db.backref("excursions", lazy=True))
-    participants = db.relationship("Human", secondary=excursion_humans, backref=db.backref("excursions_taken", lazy=True))
+    participants = db.relationship("Human", secondary=excursion_humans, backref=db.backref("excursions", lazy=True))
 
     def __init__(self, human, alien, spaceship):
         self.human = human

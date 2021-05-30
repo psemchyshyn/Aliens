@@ -6,7 +6,7 @@ import LoginForm from "../../../Auth/components/LoginForm/index"
 
 const Header = () => {
   const user = useSelector(state => state.user)
-  console.log("Here is the authorised user", user)
+  // console.log("Here is the authorised user", user)
     const defineHome = () => {
       if (user) {
           if (user.isAlien) {
@@ -21,12 +21,13 @@ const Header = () => {
 
     return (
         <Navbar bg="light" variant="light">
-        <Navbar.Brand href="/home">Navbar</Navbar.Brand>
+        <Navbar.Brand href="/home">Humaliens</Navbar.Brand>
         <Nav className="mr-auto">
           <Nav.Link href={defineHome()}>Home</Nav.Link>
           <Nav.Link href="/spaceships">Spaceships</Nav.Link>
           <Nav.Link href="/enemies">Enemies</Nav.Link>
-          <Nav.Link href="/excursions">Excursions</Nav.Link>
+          <Nav.Link href="/excursions">Activities</Nav.Link>
+          <Nav.Link href="/queries">Queries</Nav.Link>
         </Nav>
         <Form inline>
           <FormControl type="text" placeholder="Search" className="mr-sm-2" />
